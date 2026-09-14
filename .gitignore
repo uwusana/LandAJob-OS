@@ -1,0 +1,7 @@
+node_modules/
+.env
+.env.*
+!.env.example
+client/dist/
+server/logs/
+zalando-sans-jetbrains-mono-brand-kit.pdf
