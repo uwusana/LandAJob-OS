@@ -3479,7 +3479,7 @@ select {
 }
 .projects-summary {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   border: 1px solid var(--border);
   background: var(--surface);
   box-shadow: var(--shadow);
@@ -3539,7 +3539,7 @@ select {
   display: grid;
   width: 100%;
   max-width: 100%;
-  grid-template-columns: repeat(4, minmax(190px, 1fr));
+  grid-template-columns: repeat(5, minmax(190px, 1fr));
   gap: 9px;
   overflow-x: auto;
   padding-bottom: 8px;
@@ -3562,6 +3562,9 @@ select {
   border-top: 2px solid var(--primary);
 }
 .project-column:nth-child(4) {
+  border-top: 2px solid var(--primary-strong);
+}
+.project-column:nth-child(5) {
   border-top: 2px solid var(--primary-strong);
 }
 .project-column > header {
@@ -3960,7 +3963,7 @@ select {
 
 @media (max-width: 1050px) {
   .projects-board {
-    grid-template-columns: repeat(4, minmax(205px, 1fr));
+    grid-template-columns: repeat(5, minmax(205px, 1fr));
   }
 }
 @media (max-width: 720px) {
@@ -3982,7 +3985,7 @@ select {
     flex-direction: column;
   }
   .projects-board {
-    grid-template-columns: repeat(4, minmax(220px, 1fr));
+    grid-template-columns: repeat(5, minmax(220px, 1fr));
     margin-inline: -16px;
     padding-inline: 16px;
   }

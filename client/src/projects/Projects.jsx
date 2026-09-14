@@ -17,12 +17,13 @@ import {
 import { NavLink } from 'react-router-dom';
 
 const statuses = ['IDEA', 'PLANNED', 'IN PROGRESS', 'PAUSED', 'SHIPPED'];
-const boardStatuses = ['IDEA', 'PLANNED', 'IN PROGRESS', 'SHIPPED'];
+const boardStatuses = ['IDEA', 'PLANNED', 'IN PROGRESS', 'PAUSED', 'SHIPPED'];
 const priorities = ['High', 'Medium', 'Low'];
 const statusLabels = {
   IDEA: 'Ideas',
   PLANNED: 'Planned',
   'IN PROGRESS': 'In Progress',
+  PAUSED: 'Paused',
   SHIPPED: 'Shipped',
 };
 const initialProjects = [
@@ -584,6 +585,7 @@ function Projects() {
         .length,
       shipped: projects.filter((project) => project.status === 'SHIPPED')
         .length,
+      paused: projects.filter((project) => project.status === 'PAUSED').length,
     }),
     [projects]
   );
@@ -675,6 +677,11 @@ function Projects() {
           <span className="eyebrow">In progress</span>
           <strong className="mono">{stats.inProgress}</strong>
           <small>Active builds</small>
+        </div>
+        <div>
+          <span className="eyebrow">Paused</span>
+          <strong className="mono">{stats.paused}</strong>
+          <small>On hold</small>
         </div>
         <div>
           <span className="eyebrow">Shipped</span>
