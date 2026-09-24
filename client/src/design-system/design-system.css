@@ -3809,10 +3809,17 @@ select {
   gap: 7px;
   margin-top: 11px;
 }
-.project-milestones button {
+.project-milestone-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.project-milestone-toggle {
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
   border: 0;
   background: transparent;
   color: var(--text-soft);
@@ -3820,23 +3827,57 @@ select {
   text-align: left;
   font-size: 11px;
 }
-.project-milestones button > span {
+.project-milestone-toggle > span {
   display: grid;
   width: 17px;
   height: 17px;
+  flex: none;
   place-items: center;
   border: 1px solid var(--border-strong);
   border-radius: 50%;
   color: var(--primary);
 }
-.project-milestones button.is-done {
+.project-milestone-toggle.is-done {
   color: var(--text-muted);
   text-decoration: line-through;
 }
-.project-milestones button.is-done > span {
+.project-milestone-toggle.is-done > span {
   border-color: var(--primary);
   background: var(--primary);
   color: var(--background);
+}
+.project-milestone-remove {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border: 0;
+  background: transparent;
+}
+.project-milestone-add {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 11px;
+}
+.project-milestone-add input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  outline: 0;
+  background: var(--surface-raised);
+  color: var(--text);
+  padding: 7px 10px;
+  font-size: 11px;
+}
+.project-milestone-add input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-soft);
+}
+.project-milestone-add-button {
+  width: 26px;
+  height: 26px;
+  flex: none;
 }
 .project-links {
   display: grid;

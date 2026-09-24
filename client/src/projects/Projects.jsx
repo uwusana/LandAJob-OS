@@ -428,10 +428,23 @@ function ProjectCard({ project, onSelect, onEdit, onDelete, onStatusChange }) {
   );
 }
 
-function ProjectDetail({ project, onClose, onEdit, onToggleMilestone }) {
+function ProjectDetail({
+  project,
+  onClose,
+  onEdit,
+  onToggleMilestone,
+  onAddMilestone,
+  onRemoveMilestone,
+}) {
   const completedMilestones = project.milestones.filter(
     (milestone) => milestone.done
   ).length;
+  const [milestoneInput, setMilestoneInput] = useState('');
+  const submitMilestone = () => {
+    if (!milestoneInput.trim()) return;
+    onAddMilestone(project.id, milestoneInput.trim());
+    setMilestoneInput('');
+  };
   return (
     <aside className="project-detail-panel">
       <div className="project-detail-header">
@@ -507,21 +520,53 @@ function ProjectDetail({ project, onClose, onEdit, onToggleMilestone }) {
         {project.milestones.length ? (
           <div className="project-milestones">
             {project.milestones.map((milestone, index) => (
-              <button
-                className={milestone.done ? 'is-done' : ''}
-                key={milestone.label}
-                onClick={() => onToggleMilestone(project.id, index)}
-              >
-                <span>
-                  {milestone.done ? <Check size={12} /> : <Circle size={12} />}
-                </span>
-                {milestone.label}
-              </button>
+              <div className="project-milestone-row" key={index}>
+                <button
+                  className={
+                    milestone.done ? 'project-milestone-toggle is-done' : 'project-milestone-toggle'
+                  }
+                  onClick={() => onToggleMilestone(project.id, index)}
+                >
+                  <span>
+                    {milestone.done ? <Check size={12} /> : <Circle size={12} />}
+                  </span>
+                  {milestone.label}
+                </button>
+                <button
+                  className="icon-button project-milestone-remove"
+                  onClick={() => onRemoveMilestone(project.id, index)}
+                  aria-label={`Remove milestone ${milestone.label}`}
+                >
+                  <X size={13} />
+                </button>
+              </div>
             ))}
           </div>
         ) : (
           <p className="project-muted">No milestones added yet.</p>
         )}
+        <div className="project-milestone-add">
+          <input
+            value={milestoneInput}
+            onChange={(event) => setMilestoneInput(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                submitMilestone();
+              }
+            }}
+            placeholder="Add a milestone"
+            aria-label="New milestone name"
+          />
+          <button
+            type="button"
+            className="icon-button project-milestone-add-button"
+            onClick={submitMilestone}
+            aria-label="Add milestone"
+          >
+            <Plus size={14} />
+          </button>
+        </div>
       </section>
       <section className="project-detail-section">
         <span className="eyebrow">Links</span>
@@ -629,6 +674,30 @@ function Projects() {
                 index === milestoneIndex
                   ? { ...milestone, done: !milestone.done }
                   : milestone
+              ),
+            }
+          : project
+      )
+    );
+  const addMilestone = (projectId, label) =>
+    setProjects((current) =>
+      current.map((project) =>
+        project.id === projectId
+          ? {
+              ...project,
+              milestones: [...project.milestones, { label, done: false }],
+            }
+          : project
+      )
+    );
+  const removeMilestone = (projectId, milestoneIndex) =>
+    setProjects((current) =>
+      current.map((project) =>
+        project.id === projectId
+          ? {
+              ...project,
+              milestones: project.milestones.filter(
+                (_, index) => index !== milestoneIndex
               ),
             }
           : project
@@ -745,6 +814,8 @@ function Projects() {
           onClose={() => setSelectedId(null)}
           onEdit={openEdit}
           onToggleMilestone={toggleMilestone}
+          onAddMilestone={addMilestone}
+          onRemoveMilestone={removeMilestone}
         />
       )}
       {notice && (
